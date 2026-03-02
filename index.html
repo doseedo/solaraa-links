@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>solaraa_xo</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(160deg,
+        #b8e4f9 0%,
+        #d4f0c4 25%,
+        #c2e8f5 50%,
+        #a8d8ea 75%,
+        #cef0d8 100%
+      );
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 20px 50px;
+      color: #1a3a4a;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Frutiger Aero background orbs */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -120px;
+      left: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.55) 0%, rgba(160,220,255,0.3) 40%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -80px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(180,255,200,0.5) 0%, rgba(120,210,180,0.25) 45%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Floating bubbles */
+    .bubble {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.8), rgba(180,230,255,0.2));
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset 0 2px 8px rgba(255,255,255,0.7), 0 4px 15px rgba(100,180,220,0.2);
+    }
+    .bubble-1 { width: 80px; height: 80px; top: 15%; left: 5%; }
+    .bubble-2 { width: 50px; height: 50px; top: 40%; right: 8%; }
+    .bubble-3 { width: 35px; height: 35px; top: 70%; left: 10%; }
+    .bubble-4 { width: 60px; height: 60px; bottom: 20%; right: 5%; }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a8dff5, #c8f5e0, #b0e8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      margin-bottom: 16px;
+      position: relative;
+      box-shadow:
+        0 8px 32px rgba(100, 180, 220, 0.4),
+        0 2px 8px rgba(255,255,255,0.8) inset,
+        0 -2px 6px rgba(100,180,220,0.3) inset;
+      border: 2px solid rgba(255,255,255,0.85);
+    }
+
+    /* Gloss shine on avatar */
+    .avatar::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 14px;
+      width: 45px;
+      height: 22px;
+      background: rgba(255,255,255,0.55);
+      border-radius: 50%;
+      filter: blur(3px);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #1a4a5a;
+      text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+      margin-bottom: 4px;
+    }
+
+    .tagline {
+      font-size: 13px;
+      font-weight: 400;
+      color: #3a7a8a;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 42px;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+    }
+
+    .links {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    a.link-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 15px 18px;
+      border-radius: 18px;
+      text-decoration: none;
+      color: #1a3a4a;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      position: relative;
+      overflow: hidden;
+      border: 1.5px solid rgba(255,255,255,0.75);
+      box-shadow:
+        0 4px 20px rgba(100,180,220,0.2),
+        0 1px 4px rgba(255,255,255,0.9) inset,
+        0 -1px 3px rgba(100,180,220,0.15) inset;
+    }
+
+    /* Gloss top shine on each button */
+    a.link-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.55), rgba(255,255,255,0.1));
+      border-radius: 18px 18px 0 0;
+      pointer-events: none;
+    }
+
+    a.link-btn:hover {
+      transform: translateY(-3px) scale(1.01);
+      box-shadow:
+        0 10px 32px rgba(100,180,220,0.35),
+        0 1px 4px rgba(255,255,255,0.9) inset;
+    }
+
+    .ig  { background: linear-gradient(135deg, #ffd4e8, #ffb3cc, #ffc8e0); }
+    .tt  { background: linear-gradient(135deg, #c8eeff, #a0dcf5, #b8e8ff); }
+    .yt  { background: linear-gradient(135deg, #ffd4c8, #ffb8a8, #ffc4b8); }
+    .sp  { background: linear-gradient(135deg, #c8f5d4, #a0e8b8, #b8f0cc); }
+    .am  { background: linear-gradient(135deg, #ffc8c8, #ffa8a8, #ffb8b8); }
+    .sc  { background: linear-gradient(135deg, #ffd8b8, #ffbf90, #ffcca8); }
+
+    a.link-btn .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(255,255,255,0.9) inset;
+      position: relative;
+      z-index: 1;
+    }
+
+    .link-label {
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    .link-platform {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(30,70,90,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1px;
+    }
+
+    .link-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a3a4a;
+    }
+
+    /* Water ripple / lens flare accent */
+    .flare {
+      position: fixed;
+      top: 30%;
+      right: 15%;
+      width: 120px;
+      height: 120px;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(200,240,255,0.3) 30%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    footer {
+      margin-top: 52px;
+      font-size: 11px;
+      color: rgba(30,70,90,0.35);
+      letter-spacing: 0.06em;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bubble bubble-1"></div>
+  <div class="bubble bubble-2"></div>
+  <div class="bubble bubble-3"></div>
+  <div class="bubble bubble-4"></div>
+  <div class="flare"></div>
+
+  <div class="container">
+
+    <div class="avatar">🌟</div>
+    <h1>solaraa_xo</h1>
+    <p class="tagline">music</p>
+
+    <div class="links">
+
+      <a class="link-btn ig" href="https://instagram.com/solaraa_xo" target="_blank">
+        <div class="icon">📸</div>
+        <div class="link-label">
+          <div class="link-platform">Instagram</div>
+          <div class="link-name">@solaraa_xo</div>
+        </div>
+      </a>
+
+      <a class="link-btn tt" href="https://tiktok.com/@solaraa_xo" target="_blank">
+        <div class="icon">🎵</div>
+        <div class="link-label">
+          <div class="link-platform">TikTok</div>
+          <div class="link-name">@solaraa_xo</div>
+        </div>
+      </a>
+
+      <a class="link-btn yt" href="https://youtube.com/@solaraa_xo" target="_blank">
+        <div class="icon">▶️</div>
+        <div class="link-label">
+          <div class="link-platform">YouTube</div>
+          <div class="link-name">@solaraa_xo</div>
+        </div>
+      </a>
+
+      <a class="link-btn sp" href="https://open.spotify.com/artist/3ZJJ0fZworhh3TpNDraEC8" target="_blank">
+        <div class="icon">🎧</div>
+        <div class="link-label">
+          <div class="link-platform">Spotify</div>
+          <div class="link-name">solaraa</div>
+        </div>
+      </a>
+
+      <a class="link-btn am" href="https://music.apple.com/us/artist/solaraa/1776427730" target="_blank">
+        <div class="icon">🎵</div>
+        <div class="link-label">
+          <div class="link-platform">Apple Music</div>
+          <div class="link-name">solaraa</div>
+        </div>
+      </a>
+
+      <a class="link-btn sc" href="https://soundcloud.com/solaraa_xo" target="_blank">
+        <div class="icon">☁️</div>
+        <div class="link-label">
+          <div class="link-platform">SoundCloud</div>
+          <div class="link-name">@solaraa_xo</div>
+        </div>
+      </a>
+
+    </div>
+
+    <footer>solaraa_xo · 2026</footer>
+
+  </div>
+
+</body>
+</html>
